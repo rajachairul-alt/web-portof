@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raja Chairul Jannah Wydmann — Industrial Data Scientist & Cloud Architect</title>
+<meta name="description" content="Portfolio of Raja Chairul Jannah Wydmann, S.St. – Systems Architect and Industrial Electrical Engineer specializing in IoT, AR, and Cloud Infrastructure (AWS/OCI).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0E1012;
+    --bg-secondary: #141618;
+    --bg-card: #1A1C1E;
+    --bg-card-2: #1F2123;
+    --accent-orange: #FF6B00;
+    --accent-cyan: #00E5FF;
+    --text-primary: #F0F2F4;
+    --text-secondary: #8A9099;
+    --text-muted: #505560;
+    --border: rgba(255,255,255,0.06);
+    --border-bright: rgba(0,229,255,0.2);
+    --glow-cyan: 0 0 30px rgba(0,229,255,0.15);
+    --glow-orange: 0 0 30px rgba(255,107,0,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,229,255,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+  }
+  body:has(a:hover) .cursor, body:has(button:hover) .cursor { width: 16px; height: 16px; background: var(--accent-orange); }
+  body:has(a:hover) .cursor-ring, body:has(button:hover) .cursor-ring { width: 52px; height: 52px; border-color: rgba(255,107,0,0.4); }
+
+  /* PROGRESS BAR */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px; z-index: 1000;
+    width: 0%; transition: width 0.1s linear;
+    background: linear-gradient(to right, var(--accent-cyan), var(--accent-orange));
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(14,16,18,0.95), transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  nav.scrolled { background: rgba(14,16,18,0.97); padding: 14px 48px; }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent-cyan);
+    letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--text-muted); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text-secondary);
+    text-decoration: none; letter-spacing: 0.12em;
+    text-transform: uppercase; transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--accent-cyan);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent-cyan); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(rgba(0,229,255,1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,1) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridFloat 20s linear infinite;
+  }
+  @keyframes gridFloat { from { transform: translate(0,0); } to { transform: translate(60px, 60px); } }
+
+  .hero-scanline {
+    position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-cyan), transparent);
+    animation: scanline 6s ease-in-out infinite; opacity: 0.3;
+  }
+  @keyframes scanline { 0%,100% { top: 20%; opacity: 0; } 50% { top: 80%; opacity: 0.4; } }
+
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-bright);
+    border-radius: 2px;
+    background: rgba(0,229,255,0.05);
+    margin-bottom: 32px;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,229,255,0.4); } 50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,229,255,0); } }
+  .hero-badge span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.18em;
+    color: var(--accent-cyan); text-transform: uppercase;
+  }
+
+  .hero-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(56px, 9vw, 112px);
+    font-weight: 800; line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .hero-name .line1 { display: block; color: var(--text-primary); }
+  .hero-name .line2 {
+    display: block;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+    color: transparent;
+  }
+  .hero-name .line3 { display: block; color: var(--accent-orange); }
+
+  .hero-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--accent-cyan);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero-bio {
+    font-size: 16px; line-height: 1.75;
+    color: var(--text-secondary); max-width: 600px;
+    margin-bottom: 48px;
+  }
+  .hero-bio strong { color: var(--text-primary); font-weight: 600; }
+
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 28px;
+    background: var(--accent-orange);
+    color: #fff; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    transition: all 0.3s; cursor: none;
+  }
+  .btn-primary:hover { background: var(--accent-cyan); color: var(--bg-primary); transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 28px;
+    background: transparent;
+    color: var(--text-primary); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border-bright);
+    transition: all 0.3s; cursor: none;
+  }
+  .btn-secondary:hover { border-color: var(--accent-orange); color: var(--accent-orange); background: rgba(255,107,0,0.05); }
+
+  /* STATS BAR */
+  .hero-stats {
+    display: flex; gap: 0;
+    margin-top: 64px; padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-item {
+    flex: 1; padding: 0 32px 0 0;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 40px; font-weight: 700;
+    color: var(--accent-orange); line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-num span { font-size: 20px; color: var(--accent-cyan); }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--text-muted);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  /* SECTION SHARED */
+  section { padding: 100px 48px; position: relative; }
+  .section-header { margin-bottom: 64px; }
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-cyan);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-tag::before {
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--accent-cyan);
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800; text-transform: uppercase;
+    line-height: 1; letter-spacing: -0.01em;
+  }
+  .section-title em { color: var(--accent-orange); font-style: normal; }
+
+  /* CREDENTIALS */
+  #credentials { background: var(--bg-secondary); }
+
+  .cred-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .cred-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative; overflow: hidden;
+    transition: all 0.3s; cursor: none;
+  }
+  .cred-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--accent-cyan);
+    transition: height 0.3s;
+  }
+  .cred-card::after {
+    content: ''; position: absolute;
+    inset: 0; opacity: 0;
+    background: linear-gradient(135deg, rgba(0,229,255,0.05), transparent);
+    transition: opacity 0.3s;
+  }
+  .cred-card:hover { border-color: var(--border-bright); transform: translateY(-4px); box-shadow: var(--glow-cyan); }
+  .cred-card:hover::before { height: 100%; }
+  .cred-card:hover::after { opacity: 1; }
+
+  .cred-issuer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.2em;
+    color: var(--accent-cyan); text-transform: uppercase;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .cred-issuer::before { content: '//'; color: var(--text-muted); }
+
+  .cred-name {
+    font-size: 15px; font-weight: 600;
+    color: var(--text-primary); line-height: 1.4;
+    margin-bottom: 12px;
+  }
+
+  .cred-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--text-muted);
+  }
+
+  .cred-status {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 14px; padding: 3px 10px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: var(--accent-cyan); letter-spacing: 0.12em;
+  }
+  .cred-status::before { content: '●'; font-size: 6px; animation: pulse 2s infinite; }
+
+  /* CASE STUDIES */
+  #systems { background: var(--bg-primary); }
+
+  .case-study {
+    margin-bottom: 80px; padding-bottom: 80px;
+    border-bottom: 1px solid var(--border);
+  }
+  .case-study:last-child { border-bottom: none; margin-bottom: 0; }
+
+  .case-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 48px; margin-bottom: 48px; align-items: start;
+  }
+  @media (max-width: 768px) { .case-header { grid-template-columns: 1fr; } }
+
+  .case-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 120px; font-weight: 800;
+    color: rgba(255,255,255,0.03);
+    line-height: 1; position: absolute;
+    top: -20px; left: -10px;
+  }
+
+  .case-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-orange);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+
+  .case-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px; font-weight: 700;
+    text-transform: uppercase; line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .case-title em { color: var(--accent-cyan); font-style: normal; }
+
+  .case-description { font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
+  .case-description strong { color: var(--text-primary); }
+
+  .case-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .tag {
+    padding: 4px 12px;
+    background: rgba(0,229,255,0.06);
+    border: 1px solid rgba(0,229,255,0.15);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-cyan); letter-spacing: 0.08em;
+  }
+
+  /* MQTT FLOWCHART */
+  .mqtt-flow {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 40px; position: relative;
+    overflow: hidden;
+  }
+  .mqtt-flow::before {
+    content: 'MQTT FLOW'; position: absolute;
+    top: 16px; right: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: var(--text-muted); letter-spacing: 0.2em;
+  }
+
+  .flow-nodes {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+  }
+
+  .flow-node {
+    flex: 1; min-width: 130px;
+    background: var(--bg-card-2);
+    border: 1px solid var(--border);
+    padding: 20px 16px; text-align: center;
+    position: relative; transition: all 0.3s; cursor: none;
+  }
+  .flow-node:hover {
+    border-color: var(--accent-cyan);
+    background: rgba(0,229,255,0.05);
+    box-shadow: var(--glow-cyan);
+  }
+  .flow-node:hover .node-tooltip { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  .node-icon { font-size: 24px; margin-bottom: 8px; }
+  .node-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--accent-cyan); margin-bottom: 4px;
+  }
+  .node-component { font-size: 12px; color: var(--text-secondary); }
+
+  .node-tooltip {
+    position: absolute; bottom: calc(100% + 10px); left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    background: #0A0C0E;
+    border: 1px solid var(--accent-cyan);
+    padding: 12px 14px; min-width: 200px; z-index: 10;
+    opacity: 0; transition: all 0.2s; pointer-events: none;
+    text-align: left;
+  }
+  .node-tooltip::after {
+    content: ''; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent; border-top-color: var(--accent-cyan);
+  }
+  .tooltip-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: var(--text-secondary); margin-bottom: 4px;
+  }
+  .tooltip-line span { color: var(--accent-cyan); }
+
+  .flow-arrow {
+    display: flex; align-items: center; color: var(--accent-orange);
+    flex-shrink: 0; font-size: 20px;
+    position: relative;
+  }
+  .flow-arrow::before {
+    content: '';
+    position: absolute; top: 50%; left: -20px; right: -20px;
+    height: 1px; background: linear-gradient(to right, transparent, var(--accent-orange), transparent);
+    animation: flowPulse 2s ease-in-out infinite;
+  }
+  @keyframes flowPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  /* ARCHITECTURE LAYERS */
+  .arch-layers {
+    display: flex; flex-direction: column; gap: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border); padding: 36px;
+  }
+
+  .arch-layer {
+    display: flex; align-items: center; gap: 24px;
+    padding: 20px 24px;
+    background: var(--bg-card-2);
+    border: 1px solid var(--border);
+    transition: all 0.3s; cursor: none; position: relative;
+  }
+  .arch-layer::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 0; background: var(--accent-cyan); opacity: 0.1;
+    transition: width 0.3s;
+  }
+  .arch-layer:hover { border-color: rgba(0,229,255,0.3); }
+  .arch-layer:hover::before { width: 100%; }
+
+  .layer-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px; font-weight: 800;
+    color: rgba(255,255,255,0.06); line-height: 1; flex-shrink: 0;
+    width: 40px;
+  }
+  .layer-info { flex: 1; }
+  .layer-name {
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 4px;
+  }
+  .layer-tech {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent-cyan);
+  }
+  .layer-desc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  .layer-status {
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: var(--accent-orange);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  /* MINING CASE */
+  .pipeline-steps {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 0; position: relative;
+  }
+  @media (max-width: 900px) { .pipeline-steps { grid-template-columns: 1fr 1fr; gap: 16px; } }
+
+  .pipeline-step {
+    padding: 24px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-right: none; position: relative;
+    transition: all 0.3s;
+  }
+  .pipeline-step:last-child { border-right: 1px solid var(--border); }
+  .pipeline-step:hover {
+    background: var(--bg-card-2);
+    border-color: rgba(0,229,255,0.2);
+    z-index: 1;
+  }
+  .pipeline-step::after {
+    content: '→'; position: absolute;
+    right: -14px; top: 50%; transform: translateY(-50%);
+    color: var(--accent-orange); font-size: 18px; z-index: 2;
+    background: var(--bg-primary); padding: 0 2px;
+  }
+  .pipeline-step:last-child::after { display: none; }
+
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-orange);
+    letter-spacing: 0.15em; margin-bottom: 10px;
+  }
+  .step-name {
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 8px;
+  }
+  .step-desc { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+
+  /* HISTORY */
+  #history { background: var(--bg-secondary); }
+
+  .timeline {
+    position: relative; padding-left: 32px;
+  }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-orange), transparent);
+  }
+
+  .timeline-item {
+    position: relative; padding: 0 0 48px 40px;
+  }
+  .timeline-dot {
+    position: absolute; left: -6px; top: 6px;
+    width: 12px; height: 12px;
+    background: var(--bg-primary);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 50%; transition: all 0.3s;
+  }
+  .timeline-item:hover .timeline-dot {
+    background: var(--accent-cyan);
+    box-shadow: 0 0 12px rgba(0,229,255,0.6);
+  }
+
+  .timeline-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-cyan);
+    letter-spacing: 0.15em; margin-bottom: 8px;
+  }
+  .timeline-role {
+    font-size: 20px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 4px;
+  }
+  .timeline-company {
+    font-size: 14px; color: var(--accent-orange); margin-bottom: 12px; font-weight: 500;
+  }
+  .timeline-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; max-width: 600px; }
+
+  /* CONNECT */
+  #connect {
+    background: var(--bg-primary);
+    text-align: center;
+  }
+
+  .connect-inner { max-width: 600px; margin: 0 auto; }
+  .connect-line {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700; text-transform: uppercase;
+    line-height: 1.1; margin-bottom: 32px;
+    color: var(--text-primary);
+  }
+  .connect-line em { color: var(--accent-orange); font-style: normal; }
+
+  .connect-links {
+    display: flex; justify-content: center;
+    gap: 24px; flex-wrap: wrap; margin-top: 40px;
+  }
+  .connect-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    text-decoration: none; font-size: 13px; font-weight: 500;
+    transition: all 0.3s; cursor: none;
+  }
+  .connect-link:hover {
+    border-color: var(--accent-cyan); color: var(--accent-cyan);
+    background: rgba(0,229,255,0.05); transform: translateY(-2px);
+    box-shadow: var(--glow-cyan);
+  }
+  .connect-link .link-icon { font-size: 16px; }
+
+  /* FOOTER */
+  footer {
+    padding: 24px 48px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-secondary);
+  }
+  .footer-copy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em;
+  }
+  .footer-gpa {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--text-muted);
+  }
+  .footer-gpa span { color: var(--accent-cyan); }
+
+  /* FADE IN */
+  .fade-in {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* GLITCH EFFECT */
+  .glitch {
+    position: relative;
+  }
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute; left: 0; top: 0;
+    width: 100%; height: 100%;
+  }
+  .glitch::before {
+    color: var(--accent-cyan); opacity: 0;
+    animation: glitch1 4s infinite;
+    clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+  }
+  .glitch::after {
+    color: var(--accent-orange); opacity: 0;
+    animation: glitch2 4s infinite 0.1s;
+    clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+  }
+  @keyframes glitch1 {
+    0%,90%,100% { opacity: 0; transform: translate(0); }
+    91% { opacity: 0.8; transform: translate(-3px, 0); }
+    93% { opacity: 0; }
+    95% { opacity: 0.6; transform: translate(3px, 0); }
+    97% { opacity: 0; }
+  }
+  @keyframes glitch2 {
+    0%,92%,100% { opacity: 0; transform: translate(0); }
+    93% { opacity: 0.7; transform: translate(3px, 0); }
+    95% { opacity: 0; }
+    97% { opacity: 0.5; transform: translate(-3px, 0); }
+    99% { opacity: 0; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 70px 20px; }
+    #hero { padding: 100px 20px 60px; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .stat-item { min-width: 120px; border-right: none; padding: 0; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+    .pipeline-steps { grid-template-columns: 1fr; }
+    .pipeline-step { border-right: 1px solid var(--border); }
+    .pipeline-step::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo"><span>sys://</span>raja-wydmann<span>.portof</span></div>
+  <ul class="nav-links">
+    <li><a href="#hero">01 // Profile</a></li>
+    <li><a href="#credentials">02 // Credentials</a></li>
+    <li><a href="#systems">03 // Systems</a></li>
+    <li><a href="#history">04 // History</a></li>
+    <li><a href="#connect">05 // Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-scanline"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge fade-in">
+      <div class="hero-badge-dot"></div>
+      <span>Industrial Data Scientist | Maintenance Planner | Cloud Architect</span>
+    </div>
+
+    <h1 class="hero-name fade-in" style="transition-delay:0.1s">
+      <span class="line1">Raja Chairul</span>
+      <span class="line2">Jannah</span>
+      <span class="line3 glitch" data-text="Wydmann">Wydmann</span>
+    </h1>
+
+    <p class="hero-title fade-in" style="transition-delay:0.2s">
+      Bachelor Electrical &nbsp;·&nbsp; Universitas Negeri Padang &nbsp;·&nbsp; 2020
+    </p>
+    <p class="hero-title fade-in" style="transition-delay:0.2s">
+      Master Data Science &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UTEL University &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp; In Progress
+    </p>
+    <p class="hero-bio fade-in" style="transition-delay:0.3s">
+      I specialize in the convergence of <strong>physical and digital infrastructure</strong> — translating the reliability of industrial electrical systems into high-availability Cloud and AI architectures. From managing high-voltage circuits to architecting predictive maintenance at scale. <strong>I build the systems that bridge the gap.</strong>
+    </p>
+
+    <div class="hero-cta fade-in" style="transition-delay:0.4s">
+      <a href="#systems" class="btn-primary">↓ View Case Studies</a>
+      <a href="#connect" class="btn-secondary">Let's Talk →</a>
+    </div>
+
+    <div class="hero-stats fade-in" style="transition-delay:0.5s">
+      <div class="stat-item">
+        <div class="stat-num">3.70<span>/4.0</span></div>
+        <div class="stat-label">GPA — With Praise</div>
+      </div>
+      <div class="stat-item" style="padding-left:32px;">
+        <div class="stat-num">10<span>+</span></div>
+        <div class="stat-label">Certifications</div>
+      </div>
+      <div class="stat-item" style="padding-left:32px;">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Live Case Studies</div>
+      </div>
+      <div class="stat-item" style="padding-left:32px;">
+        <div class="stat-num">2<span> worlds</span></div>
+        <div class="stat-label">Physical + Digital</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section id="credentials">
+  <div class="section-header fade-in">
+    <div class="section-tag">02 // Credentials</div>
+    <h2 class="section-title">The <em>Arsenal</em></h2>
+  </div>
+
+  <div class="cred-grid">
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">BNSP — Mining</div>
+      <div class="cred-name">Frontline Operational Supervisor (POP)</div>
+      <div class="cred-meta">Mineral &amp; Coal Mining &nbsp;·&nbsp; Apr 13, 2023</div>
+      <div class="cred-status">FIELD CERTIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Amazon Web Services</div>
+      <div class="cred-name">Certified Cloud Practitioner</div>
+      <div class="cred-meta">Issued: Nov 3, 2025 &nbsp;·&nbsp; Exp: Nov 3, 2028</div>
+      <div class="cred-status">ACTIVE &amp; VERIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Oracle OCI 2025</div>
+      <div class="cred-name">Certified Networking Professional</div>
+      <div class="cred-meta">Issued: Oct 16, 2025</div>
+      <div class="cred-status">ACTIVE &amp; VERIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Oracle OCI 2025</div>
+      <div class="cred-name">Certified Data Science Professional</div>
+      <div class="cred-meta">Issued: Oct 07, 2025</div>
+      <div class="cred-status">ACTIVE &amp; VERIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Oracle OCI 2025</div>
+      <div class="cred-name">AI Foundations Associate</div>
+      <div class="cred-meta">Issued: 2025</div>
+      <div class="cred-status">ACTIVE &amp; VERIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Oracle OCI 2025</div>
+      <div class="cred-name">Certified Architect Professional Oracle@AWS</div>
+      <div class="cred-meta">Issued: Oct 22, 2025</div>
+      <div class="cred-status">ACTIVE &amp; VERIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Huawei — Digitaltalent 2025</div>
+      <div class="cred-name">HCIA Security - FGA </div>
+      <div class="cred-meta">40-Hour Intensive &nbsp;·&nbsp; Completed Nov 14, 2025</div>
+      <div class="cred-status">CERTIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">AWS Academy</div>
+      <div class="cred-name">Generative AI Foundations + AWS re/Start</div>
+      <div class="cred-meta">Graduate Program</div>
+      <div class="cred-status">CERTIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Google x Coursera</div>
+      <div class="cred-name">Google Cybersecurity</div>
+      <div class="cred-meta">Professional Certificate Track &nbsp;·&nbsp; Completed Apr 13, 2026</div>
+      <div class="cred-status">CERTIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Google x Coursera</div>
+      <div class="cred-name">Google AI Essentials</div>
+      <div class="cred-meta">Professional Certificate Track &nbsp;·&nbsp; Completed Apr 12, 2026</div>
+      <div class="cred-status">ACTIVE &amp; VERIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Cisco Networking Academy</div>
+      <div class="cred-name">Data Analytics Essentials</div>
+      <div class="cred-meta">Completed Aug 11, 2025</div>
+      <div class="cred-status">CERTIFIED</div>
+    </div>
+
+    <div class="cred-card fade-in">
+      <div class="cred-issuer">Udemy / IYKRA</div>
+      <div class="cred-name">Data Science Foundation</div>
+      <div class="cred-meta">Issued: Jan 12, 2024</div>
+      <div class="cred-status">CERTIFIED</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SYSTEMS / CASE STUDIES -->
+<section id="systems">
+  <div class="section-header fade-in">
+    <div class="section-tag">03 // Systems</div>
+    <h2 class="section-title">Case <em>Studies</em></h2>
+  </div>
+
+  <!-- CASE STUDY 1 -->
+  <div class="case-study fade-in">
+    <div class="case-header">
+      <div>
+        <div class="case-label">Case Study 01 &nbsp;·&nbsp; Financial ML</div>
+        <h3 class="case-title">The False-Negative <em>Fallacy</em></h3>
+        <p class="case-description">
+          <strong>Client: ID/X Partners</strong> — Credit Risk Prediction pipeline built on a highly imbalanced 88:11 Good-to-Bad loan dataset. A model optimized for accuracy is <strong>the wrong model</strong>. A false negative — approving a bad loan — costs exponentially more than rejecting ten good ones.
+        </p>
+        <div class="case-tags">
+          <span class="tag">XGBoost</span>
+          <span class="tag">LightGBM</span>
+          <span class="tag">SMOTE</span>
+          <span class="tag">StandardScaler</span>
+          <span class="tag">Threshold Tuning</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+      <div>
+        <div class="ml-flow">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:20px;letter-spacing:0.12em;">ML PIPELINE — 5 STAGES</div>
+          <div class="pipeline-steps">
+            <div class="pipeline-step">
+              <div class="step-num">01</div>
+              <div class="step-name">Data Understanding</div>
+              <div class="step-desc">Detect 88:11 class imbalance</div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">02</div>
+              <div class="step-name">Feature Engineering</div>
+              <div class="step-desc">Handle missing data &amp; skewness via StandardScaler</div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">03</div>
+              <div class="step-name">Prep &amp; SMOTE</div>
+              <div class="step-desc">Synthesize minority class to 50:50 balance</div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">04</div>
+              <div class="step-name">Modelling</div>
+              <div class="step-desc">Deploy XGBoost / LightGBM</div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">05</div>
+              <div class="step-name">Business Tuning</div>
+              <div class="step-desc">Lower threshold 0.5→0.2 to catch hidden defaults</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE STUDY 2 -->
+  <div class="case-study fade-in">
+    <div class="case-header">
+      <div>
+        <div class="case-label">Case Study 02 &nbsp;·&nbsp; AR + IoT</div>
+        <h3 class="case-title">Bridging the <em>Digital-to-Physical</em> Gap</h3>
+        <p class="case-description">
+          <strong>Published: <a href="https://doi.org/10.24036/jtein.v1i2.48" target="_blank">JTEIN Journal</a>, Universitas Negeri Padang</strong> — Built a unified AR IoT control system where digital gestures physically flip real-world relay switches via MQTT protocol. Smart homes shouldn't just <em>display</em> data — they should <em>respond</em> to it.
+        </p>
+        <div class="case-tags">
+          <span class="tag">Unity</span>
+          <span class="tag">MRTK</span>
+          <span class="tag">MQTT</span>
+          <span class="tag">Raspberry Pi 3</span>
+          <span class="tag">NodeMCU ESP8266</span>
+          <span class="tag">No-IP DDNS</span>
+        </div>
+      </div>
+      <div>
+        <div class="mqtt-flow">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:24px;letter-spacing:0.12em;">TELEMETRY ARCHITECTURE — LIVE SIGNAL FLOW</div>
+          <div class="flow-nodes">
+            <div class="flow-node">
+              <div class="node-icon">📱</div>
+              <div class="node-name">INPUT</div>
+              <div class="node-component">Android / Unity AR</div>
+              <div class="node-tooltip">
+                <div class="tooltip-line">UI: <span>Unity + MRTK</span></div>
+                <div class="tooltip-line">Protocol: <span>TCP/IP</span></div>
+                <div class="tooltip-line">Action: <span>Gesture Recognition</span></div>
+              </div>
+            </div>
+            <div class="flow-arrow">▶</div>
+            <div class="flow-node">
+              <div class="node-icon">🌐</div>
+              <div class="node-name">GATEWAY</div>
+              <div class="node-component">No-IP DDNS</div>
+              <div class="node-tooltip">
+                <div class="tooltip-line">Service: <span>No-IP DDNS</span></div>
+                <div class="tooltip-line">Scope: <span>Global Internet</span></div>
+              </div>
+            </div>
+            <div class="flow-arrow">▶</div>
+            <div class="flow-node">
+              <div class="node-icon">🖥️</div>
+              <div class="node-name">BROKER</div>
+              <div class="node-component">Raspberry Pi 3</div>
+              <div class="node-tooltip">
+                <div class="tooltip-line">Server: <span>Mosquitto</span></div>
+                <div class="tooltip-line">Host: <span>raspibroker.ddns.net</span></div>
+                <div class="tooltip-line">Port: <span>1883</span></div>
+              </div>
+            </div>
+            <div class="flow-arrow">▶</div>
+            <div class="flow-node">
+              <div class="node-icon">⚡</div>
+              <div class="node-name">CLIENT</div>
+              <div class="node-component">NodeMCU ESP8266</div>
+              <div class="node-tooltip">
+                <div class="tooltip-line">Role: <span>WiFi Subscriber</span></div>
+                <div class="tooltip-line">Logic: <span>LOW=On / HIGH=Off</span></div>
+              </div>
+            </div>
+            <div class="flow-arrow">▶</div>
+            <div class="flow-node">
+              <div class="node-icon">🔌</div>
+              <div class="node-name">OUTPUT</div>
+              <div class="node-component">4-Ch Relay Module</div>
+              <div class="node-tooltip">
+                <div class="tooltip-line">Topics: <span>/feeds/relay1</span></div>
+                <div class="tooltip-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>/feeds/relay2</span></div>
+                <div class="tooltip-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>/feeds/relay3</span></div>
+                <div class="tooltip-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>/feeds/relay4</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE STUDY 3 -->
+  <div class="case-study fade-in">
+    <div class="case-header">
+      <div>
+        <div class="case-label">Case Study 03 &nbsp;·&nbsp; Industrial AI</div>
+        <h3 class="case-title">Predicting <em>Catastrophe</em></h3>
+        <p class="case-description">
+          <strong>Client: PT. Madhani Talatah Nusantara — Site SBS Tanjung Enim</strong> — Predictive Maintenance engine for heavy mining equipment. In a coal mine, equipment failure doesn't just cost money. It stops everything. <strong>Maintenance cannot be reactive — it must be predictively engineered.</strong>
+        </p>
+        <div class="case-tags">
+          <span class="tag">Predictive Maintenance</span>
+          <span class="tag">Machine Learning</span>
+          <span class="tag">Mining Operations</span>
+          <span class="tag">Cloud Integration</span>
+        </div>
+      </div>
+      <div>
+        <div class="arch-layers">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:8px;letter-spacing:0.12em;">SYSTEM ARCHITECTURE</div>
+          <div class="arch-layer">
+            <div class="layer-num">L1</div>
+            <div class="layer-info">
+              <div class="layer-name">Dataset from Field</div>
+              <div class="layer-tech">Sensors Visionlink + Checklist MIP</div>
+              <div class="layer-desc">Raw data material from unit. From human inspection and data digital sensor</div>
+            </div>
+            <div class="layer-status">INPUT</div>
+          </div>
+          <div class="arch-layer">
+            <div class="layer-num">L2</div>
+            <div class="layer-info">
+              <div class="layer-name">Processing Raw Data</div>
+              <div class="layer-tech">CMMS RPM Global + Excel + Machine Learning</div>
+              <div class="layer-desc">Raw data processing, Standardization, Big data database, Data prediction using trends (human interpretation) and Machine learning</div>
+            </div>
+            <div class="layer-status">PROCESS</div>
+          </div>
+          <div class="arch-layer">
+            <div class="layer-num">L3</div>
+            <div class="layer-info">
+              <div class="layer-name">Visualization</div>
+              <div class="layer-tech">Excel + PowerBI + Tableau</div>
+              <div class="layer-desc">Interpretation, Presentation of results and call to action for maintenance</div>
+            </div>
+            <div class="layer-status">OUTPUT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- HISTORY -->
+<section id="history">
+  <div class="section-header fade-in">
+    <div class="section-tag">04 // History</div>
+    <h2 class="section-title">The <em>Ground Game</em></h2>
+  </div>
+      <div class="timeline">
+    <div class="timeline-item fade-in">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">AUG 2025 - PRESENT</div>
+      <div class="timeline-role">Master in Data Science for Business (M.Sc.)</div>
+      <div class="timeline-company">UTEL University of Mexico</div>
+      <div class="timeline-desc">Study program designed to train professionals in modeling, interpreting, and incorporating data for corporate decision-making.</div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">APR 2023</div>
+      <div class="timeline-role">Certified Frontline Operational Supervisor</div>
+      <div class="timeline-company">BNSP — Mineral & Coal Mining (POP)</div>
+      <div class="timeline-desc">Credentialed to lead and supervise operations in high-risk mineral and coal mining environments. Algorithms are only as good as the operational teams executing them.</div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">SEPT 2021 — PRESENT</div>
+      <div class="timeline-role">Maintenance Planner</div>
+      <div class="timeline-company">PT. Madhani Talatah Nusantara</div>
+      <div class="timeline-desc">Deploying predictive intelligence across cloud and edge environments. Bridging mechanical engineering principles with AI-driven architectures. Certified across AWS, OCI, Huawei, and Google platforms.</div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">JUL – AUG 2019</div>
+      <div class="timeline-role">Maintenance Department Apprentice</div>
+      <div class="timeline-company">Linde / PT Gresik Power Indonesia</div>
+      <div class="timeline-desc">Hands-on specialization in Mechanical Rotating Equipment maintenance. This field experience became the direct foundation for cloud-based Predictive Maintenance and Digital Twin frameworks built years later.</div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">JUL 2016 – NOV 2020</div>
+      <div class="timeline-role">Bachelor of Applied Science (S.St.)</div>
+      <div class="timeline-company">Universitas Negeri Padang — Industrial Electrical Engineering</div>
+      <div class="timeline-desc">Graduated With Praise — GPA 3.70/4.0. Thesis: IoT-based Home Appliance Control System (published in <a href="https://doi.org/10.24036/jtein.v1i2.48" target="_blank">JTEIN Journal</a>). Foundation in high-voltage circuits, industrial automation, and embedded systems.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section id="connect">
+  <div class="connect-inner">
+    <div class="section-tag" style="justify-content:center;margin-bottom:24px;">05 // Connect</div>
+    <div class="connect-line fade-in">
+      Let's build systems that don't just look good on paper — but <em>survive the real world.</em>
+    </div>
+    <p class="fade-in" style="color:var(--text-secondary);font-size:15px;line-height:1.7;margin-bottom:8px;transition-delay:0.1s">
+      I'm currently open to collaborations in <strong style="color:var(--text-primary)">Maintenance Planner</strong>, <strong style="color:var(--text-primary)">Industrial AI</strong>, <strong style="color:var(--text-primary)">Cloud Architecture</strong>, and <strong style="color:var(--text-primary)">IoT/Edge Computing</strong> projects where the stakes are real and the data is messy.
+    </p>
+
+    <div class="connect-links fade-in" style="transition-delay:0.2s">
+      <a href="mailto:chairulraja4@gmail.com" class="connect-link">
+        <span class="link-icon">✉</span> chairulraja4@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/raja-wydmann00" target="_blank" class="connect-link">
+        <span class="link-icon">in</span> linkedin.com/in/raja-wydmann00
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 Raja Chairul Jannah Wydmann — All systems nominal.</div>
+  <div class="footer-gpa">Maintenance Planner · Data Scientist · Cloud Architecture · IOT/Networking Enthusiast</div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // PROGRESS BAR
+  const bar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = pct + '%';
+  });
+
+  // NAV SCROLL
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // FADE IN OBSERVER
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ANIMATED COUNTER
+  function animateCounter(el, target, suffix='') {
+    let start = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { el.textContent = target + suffix; clearInterval(timer); return; }
+      el.textContent = parseFloat(start.toFixed(2)) + suffix;
+    }, 16);
+  }
+
+  // TYPING EFFECT for hero badge
+  const typeEl = document.querySelector('.hero-badge span');
+  const text = typeEl.textContent;
+  typeEl.textContent = '';
+  let i = 0;
+  const typeTimer = setInterval(() => {
+    typeEl.textContent += text[i++];
+    if (i >= text.length) clearInterval(typeTimer);
+  }, 40);
+</script>
+</body>
+</html>
